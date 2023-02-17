@@ -78,13 +78,28 @@ def logaritmica(imagen):
             z0cuadrado = u*math.log(z0+1)
             valor_temporal[i,j,0] = z0cuadrado
 
+            if valor_temporal[i,j,0] > 255:
+                valor_temporal[i,j,0] = 255
+            if valor_temporal[i,j,0] < 0:
+                valor_temporal[i,j,0] = 0
+
             z1 = valor_temporal[i,j,1]
             z1cuadrado = u*math.log(z1+1)
             valor_temporal[i,j,1] = z1cuadrado
 
+            if valor_temporal[i,j,1] > 255:
+                valor_temporal[i,j,1] = 255
+            if valor_temporal[i,j,1] < 0:
+                valor_temporal[i,j,1] = 0
+
             z2 = valor_temporal[i,j,2]
             z2cuadrado = u*math.log(z2+1)
-            valor_temporal[i,j,2]
+            valor_temporal[i,j,2] = z2cuadrado
+
+            if valor_temporal[i,j,2] > 255:
+                valor_temporal[i,j,2] = 255
+            if valor_temporal[i,j,2] < 0:
+                valor_temporal[i,j,2] = 0
 
     return valor_temporal
 
@@ -97,28 +112,43 @@ def cosenoidal(imagen):
     for i in range(ancho):
         for j in range(largo):
             z0 = valor_temporal[i,j,0]*1
-            z0cuadrado = 128*(1-math.cos((3.14*z0)/(2*128)))
+            z0cuadrado = 128*(1-math.cos((math.pi*z0)/(2*128)))
             if(z0cuadrado < 0):
                 z0cuadrado =0
             if(z0cuadrado > 255):
                 z0cuadrado=255
             valor_temporal[i,j,0] = z0cuadrado*1
 
+            if valor_temporal[i,j,0] > 255:
+                valor_temporal[i,j,0] = 255
+            if valor_temporal[i,j,0] < 0:
+                valor_temporal[i,j,0] = 0
+
             z1 = valor_temporal[i,j,1]*1
-            z1cuadrado = 128*(1-math.cos((3.14*z1)/(2*128)))
+            z1cuadrado = 128*(1-math.cos((math.pi*z1)/(2*128)))
             if(z1cuadrado < 0):
                 z1cuadrado =0
             if(z1cuadrado > 255):
                 z1cuadrado=255
             valor_temporal[i,j,1] = z1cuadrado*1
 
+            if valor_temporal[i,j,1] > 255:
+                valor_temporal[i,j,1] = 255
+            if valor_temporal[i,j,1] < 0:
+                valor_temporal[i,j,1] = 0
+
             z2 = valor_temporal[i,j,2]*1
-            z2cuadrado = 128*(1-math.cos((3.14*z2)/(2*128)))
+            z2cuadrado = 128*(1-math.cos((math.pi*z2)/(2*128)))
             if(z2cuadrado < 0):
                 z2cuadrado =0
             if(z2cuadrado > 255):
                 z2cuadrado=255
             valor_temporal[i,j,2] = z2cuadrado*1
+
+            if valor_temporal[i,j,2] > 255:
+                valor_temporal[i,j,2] = 255
+            if valor_temporal[i,j,2] < 0:
+                valor_temporal[i,j,2] = 0
 
     return valor_temporal
 
