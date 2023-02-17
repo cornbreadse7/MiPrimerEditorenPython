@@ -2,25 +2,6 @@ import numpy as np
 import math
 from skimage import io
 
-def contraste(imagen):
-    temp = np.copy(imagen)
-    largo = len(temp)
-    ancho = len(temp[1])
-    for i in range(0, largo):
-        
-        for j in range(0, ancho):
-            nuevo_color = 128
-            color = temp[i,j]
-
-            if (color < 128):
-                nuevo_color = 0
-            
-            if (color > 128):
-                nuevo_color = 255
-            
-            temp[i,j]=nuevo_color
-    return temp
-
 def umbral(imagen):
     valor_temporal =  np.copy(imagen)
     ancho = len(valor_temporal)
@@ -52,6 +33,7 @@ def umbral(imagen):
             if(color3 > 128):
                 nuevo_color3 = 255
             valor_temporal[i,j,2] = nuevo_color3
+    return valor_temporal
 
 def negativo(imagen):
     valor_temporal =  np.copy(imagen)
@@ -63,7 +45,6 @@ def negativo(imagen):
             valor_temporal[i,j,0] = 255 - np.round(valor_temporal[i,j,0])
             valor_temporal[i,j,1] = 255- np.round(valor_temporal[i,j,1])
             valor_temporal[i,j,2] = 255 - np.round(valor_temporal[i,j,2])
-
     return valor_temporal
 
 def logaritmica(imagen):

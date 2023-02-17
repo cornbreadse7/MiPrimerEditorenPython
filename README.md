@@ -1,1 +1,1 @@
-# Mi-Editor-de-Imagenes-en-Python
+# Mi Editor de Imagenes en Python
