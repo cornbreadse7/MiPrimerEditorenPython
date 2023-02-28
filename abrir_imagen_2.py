@@ -11,7 +11,7 @@ def main():
 
     # ------ Menu Definition ------ #      
     menu_def = [['Archivo', ['Abrir', 'Guardar', 'Salir'  ]],      
-                ['Filtros', ['Negativo','Logaritmica','Cosenoidal'], ],      
+                ['Filtros', ['Negativo','Logaritmica','Cosenoidal','Borde Gradiente'], ],      
                 ['Ayuda', 'Acerca de'], ]      
 
     # ------ GUI Defintion ------ #      
@@ -44,6 +44,10 @@ def main():
         if event == 'Cosenoidal':
             print("Aplicar cosenoidal")
             imagen = filtros.cosenoidal(imagen)
+
+        if event == 'Borde Gradiente':
+            print("Aplicar borde gradiente")
+            imagen = filtros.borde_gradiente(imagen)
         
         if event == 'Guardar':
             filename = sg.popup_get_file('Guardar Fotografia (PNG) to save to', save_as=True)

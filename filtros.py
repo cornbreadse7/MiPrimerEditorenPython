@@ -133,6 +133,28 @@ def cosenoidal(imagen):
 
     return valor_temporal
 
+def borde_gradiente(imagen):
+    temp = np.copy(imagen)
+    largo = len(temp)
+    ancho = len(temp[0])
+    for i in range(0, largo-1):
+        for j in range(0, ancho-1):
+            pixel_esquina = imagen[i+1, j+1,0]
+            pixel_derecha = imagen[i+1,j,0]*1
+            pixel_abajo = imagen[i,j+1,0]*1
+            pixel_actual = imagen[i,j,0]*1
+
+            derivada_h = abs(pixel_esquina - pixel_actual)
+            derivada_v = abs(pixel_abajo - pixel_derecha)
+
+            color = math.sqrt(derivada_h**2 + derivada_v**2)
+
+            if (color > 255):
+                color = 255
+            
+            temp[i,j] = int(color)
+    return temp
+
 def aclarar(imagen):
     return None
 
