@@ -35,24 +35,24 @@ def main():
             #imagen = cv2.imread("images/004.png",0)
 
         if event == 'Imagen Original':
-            print("Imagen Original")
             imagen = cv2.imread(filename)
+            sg.popup('Mostrando la imagen Original')
 
         if event == 'Negativo':
-            print("Aplicar negativo")
             imagen = filtros.negativo(imagen)
+            sg.popup('Mostrando la imagen Negativa')
 
         if event == 'Logaritmica':
-            print("Aplicar logaritmica")
             imagen = filtros.logaritmica(imagen)
+            sg.popup('Mostrando la imagen con filtro logaritmico')
 
         if event == 'Cosenoidal':
-            print("Aplicar cosenoidal")
             imagen = filtros.cosenoidal(imagen)
+            sg.popup('Mostrando la imagen con filtro cosenoidal')
 
         if event == 'Borde Gradiente':
-            print("Aplicar borde gradiente")
             imagen = filtros.borde_gradiente(imagen)
+            sg.popup('Mostrando la imagen con borde gradiente')
         
         if event == 'Guardar':
             filename = sg.popup_get_file('Guardar Fotografia (PNG) to save to', save_as=True)
@@ -63,6 +63,7 @@ def main():
             sg.popup('Aplicacion de Filtro de Imagenes con Python', 'Version 1.1', 'Cornbreadse7') 
 
         if event == 'Salir' or event == sg.WIN_CLOSED:
+            sg.popup('Gracias por usar el programa')
             break
         
         imgbytes = cv2.imencode('.png', imagen)[1].tobytes()
