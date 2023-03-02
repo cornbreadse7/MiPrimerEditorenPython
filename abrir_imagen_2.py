@@ -11,7 +11,7 @@ def main():
 
     # ------ Menu Definition ------ #      
     menu_def = [['Archivo', ['Abrir', 'Guardar', 'Salir'  ]],      
-                ['Filtros', ['Negativo','Logaritmica','Cosenoidal','Borde Gradiente'], ],      
+                ['Filtros', ['Imagen Original','Negativo','Logaritmica','Cosenoidal','Borde Gradiente'], ],      
                 ['Ayuda', 'Acerca de'], ]      
 
     # ------ GUI Defintion ------ #      
@@ -33,6 +33,11 @@ def main():
             filename = sg.popup_get_file('Abrir archivo (PNG, JPG)') # Abrir solo imagenes JPG o PNG
             imagen = cv2.imread(filename) #Validar que el nombre de archivo no este en blanco
             #imagen = cv2.imread("images/004.png",0)
+
+        if event == 'Imagen Original':
+            print("Imagen Original")
+            imagen = cv2.imread(filename)
+
         if event == 'Negativo':
             print("Aplicar negativo")
             imagen = filtros.negativo(imagen)

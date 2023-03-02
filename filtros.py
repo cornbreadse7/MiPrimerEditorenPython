@@ -140,17 +140,37 @@ def borde_gradiente(imagen):
     for i in range(0, largo-1):
         for j in range(0, ancho-1):
             pixel_esquina = imagen[i+1, j+1,0]
+            #pixel_esquina2 = imagen[i+1, j+1,1]
+            #pixel_esquina3 = imagen[i+1, j+1,2]
             pixel_derecha = imagen[i+1,j,0]*1
+            #pixel_derecha2 = imagen[i+1,j,1]*1
+            #pixel_derecha3 = imagen[i+1,j,2]*1
             pixel_abajo = imagen[i,j+1,0]*1
+            #pixel_abajo2 = imagen[i,j+1,1]*1
+            #pixel_abajo3 = imagen[i,j+1,2]*1
             pixel_actual = imagen[i,j,0]*1
+            #pixel_actual2 = imagen[i,j,1]*1
+            #pixel_actual3 = imagen[i,j,2]*1
 
             derivada_h = abs(pixel_esquina - pixel_actual)
+            #derivada_h2 = abs(pixel_esquina2 - pixel_actual2)
+            #derivada_h3 = abs(pixel_esquina3 - pixel_actual3)
             derivada_v = abs(pixel_abajo - pixel_derecha)
+            #derivada_v2 = abs(pixel_abajo2 - pixel_derecha2)
+            #derivada_v3 = abs(pixel_abajo3 - pixel_derecha3)
 
             color = math.sqrt(derivada_h**2 + derivada_v**2)
+            #color2 = math.sqrt(derivada_h2**2 + derivada_v2**2)
+            #color3 = math.sqrt(derivada_h3**2 + derivada_v3**2)
 
             if (color > 255):
                 color = 255
+
+            #if (color2 > 255):
+                #color2 = 255
+            
+            #if (color3 > 255):
+                #color3 = 255
             
             temp[i,j] = int(color)
     return temp
