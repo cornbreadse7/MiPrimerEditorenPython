@@ -3,6 +3,7 @@ import sys
 import cv2
 import filtros
 import numpy as np
+import webbrowser
 ##from datetime import date
 
 
@@ -10,8 +11,9 @@ def main():
     sg.theme('DarkGray15')
 
     menu_def = [['Archivo', ['Abrir', 'Guardar', 'Salir']],
-                ['Filtros', ['Imagen Original', 'Negativo', 'Logaritmica', 'Cosenoidal', 'Borde Gradiente','Vaciar Imagen'], ],
-                ['Ayuda', 'Acerca de'], ]
+                ['Operaciones', ['Mostrar la Imagen Original', 'Negativo', 'Logaritmica', 'Cosenoidal','Vaciar Imagen']],
+                ['Filtros', [ 'Borde Gradiente'], ],
+                ['Ayuda', ['Acerca de', 'Codigo Fuente']], ]
 
     layout = [
         [sg.Text('Editor de Imagenes con Python', size=(80, 1), justification='center')],
@@ -71,6 +73,10 @@ def main():
 
         if event == 'Acerca de':
             sg.popup('Aplicacion de Filtro de Imagenes con Python', 'Version 1.1', 'Cornbreadse7')
+
+        if event == 'Codigo Fuente':
+            webbrowser.open('https://github.com/cornbreadse7/MiPrimerEditorenPython', new=1)
+
 
         if event == 'Vaciar Imagen':
             imagen = np.ones((500, 500))
