@@ -6,4 +6,4 @@ Con filtros: Negativo, Logaritmico, Cosenoidal y Borde Gradiente.
 ![Alt text](imagenes/filtroNegativo.png "Operacion Imagen Negativa")
 ![Alt text](imagenes/filtroLogaritmica.png "Operacion logaritmica (aclaramiento)")
 ![Alt text](imagenes/filtroCosenoidal.png "Operacion cosenoidal (oscurecimiento)")
-![Alt text](imagenes/ataque_titanes_borde_gradiente.png "Filtro borde gradiente")
+![Alt text](imagenes/filtroBordeGradiente.png "Filtro borde gradiente")
