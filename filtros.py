@@ -175,6 +175,36 @@ def borde_gradiente(imagen):
             temp[i,j] = int(color)
     return temp
 
+def suavizado(imagen):
+    temp = np.copy(imagen)
+    largo = len(temp)
+    ancho = len(temp[0])
+
+    pond = [[1,2,1],[2,4,2],[1,2,1]]
+
+    for i in range(1, largo-1):
+        for j in range(1, ancho-1):
+            media0 = 0
+            media1 = 0
+            media2 = 0
+            for x in [-1,0,1]:
+                for y in [-1,0,1]:
+                    temp_2 = 1 / 16 * (pond[x + 1][y + 1] * imagen[i + x, j + y])
+                    media0 = media0 + temp_2
+                    media1 = media1 + temp_2
+                    media2 = media2 + temp_2
+            temp[i,j,0] = media0
+            temp[i,j,1] = media1
+            temp[i,j,2] = media2
+
+    return temp
+
+def disminucion_ruido(imagen):
+    return None
+
+def relieve(imagen):
+    return None
+
 def aclarar(imagen):
     return None
 

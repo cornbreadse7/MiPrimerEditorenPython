@@ -12,7 +12,7 @@ def main():
 
     menu_def = [['Archivo', ['Abrir', 'Guardar', 'Salir']],
                 ['Operaciones', ['Mostrar la Imagen Original', 'Negativo', 'Logaritmica', 'Cosenoidal','Vaciar Imagen']],
-                ['Filtros', [ 'Borde Gradiente'], ],
+                ['Filtros', [ 'Borde Gradiente','Suavizado','Disminucion del ruido','Relieve' ], ],
                 ['Ayuda', ['Acerca de', 'Codigo Fuente']], ]
 
     layout = [
@@ -70,6 +70,27 @@ def main():
             except Exception:
                 sg.popup('Por favor, elija una imagen')
                 pass
+
+        if event == 'Suavizado':
+            try:
+                imagen = filtros.suavizado(imagen)
+                sg.popup('Mostrando la imagen con suavizado')
+            except Exception:
+                sg.popup('Por favor, elija una imagen')
+
+        if event == 'Disminucion del ruido':
+            try:
+                imagen = filtros.disminucion_ruido(imagen)
+                sg.popup('Mostrando la imagen con suavizado')
+            except Exception:
+                sg.popup('Por favor, elija una imagen')
+
+        if event == 'Relieve':
+            try:
+                imagen = filtros.relieve(imagen)
+                sg.popup('Mostrando la imagen con relieve')
+            except Exception:
+                sg.popup('Por favor, elija una imagen')
 
         if event == 'Acerca de':
             sg.popup('Aplicacion de Filtro de Imagenes con Python', 'Version 1.1', 'Cornbreadse7')
