@@ -202,7 +202,28 @@ def suavizado(imagen):
     return temp
 
 def disminucion_ruido(imagen):
-    return None
+    temp = np.copy(imagen)
+    largo = len(temp)
+    ancho = len(temp[0])
+    for i in range(1, largo - 1):
+        for j in range(1, ancho - 1):
+            mediana0 = []
+            mediana1 = []
+            mediana2 = []
+            for x in [-1, 0, 1]:
+                for y in [-1, 0, 1]:
+                    mediana0.append(imagen[i + x, j + y,0])
+                    mediana1.append(imagen[i + x, j + y,1])
+                    mediana2.append(imagen[i + x, j + y,2])
+
+            mediana0.sort()
+            mediana1.sort()
+            mediana2.sort()
+
+            temp[i, j,0] = mediana0[4]
+            temp[i, j,1] = mediana1[4]
+            temp[i, j,2] = mediana2[4]
+    return temp
 
 def relieve(imagen):
     return None
