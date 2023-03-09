@@ -189,10 +189,12 @@ def suavizado(imagen):
             media2 = 0
             for x in [-1,0,1]:
                 for y in [-1,0,1]:
-                    temp_2 = 1 / 16 * (pond[x + 1][y + 1] * imagen[i + x, j + y])
-                    media0 = media0 + temp_2
-                    media1 = media1 + temp_2
-                    media2 = media2 + temp_2
+                    temp_canal0 = 1 / 16 * (pond[x + 1][y + 1] * imagen[i + x, j + y,0])
+                    temp_canal1 = 1 / 16 * (pond[x + 1][y + 1] * imagen[i + x, j + y,1])
+                    temp_canal2 = 1 / 16 * (pond[x + 1][y + 1] * imagen[i + x, j + y,2])
+                    media0 = media0 + temp_canal0
+                    media1 = media1 + temp_canal1
+                    media2 = media2 + temp_canal2
             temp[i,j,0] = media0
             temp[i,j,1] = media1
             temp[i,j,2] = media2
