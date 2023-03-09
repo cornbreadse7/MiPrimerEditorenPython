@@ -226,7 +226,31 @@ def disminucion_ruido(imagen):
     return temp
 
 def relieve(imagen):
-    return None
+    temp = np.copy(imagen)
+    largo = len(temp)
+    ancho = len(temp[0])
+    q = 127  # (256-1) /2
+
+    for i in range(0, largo - 1):
+        for j in range(0, ancho - 1):
+            nuevo_pixel0 = q + abs(imagen[i, j + 1,0] * 1) - abs(imagen[i, j,0] * 1)
+            nuevo_pixel1 = q + abs(imagen[i, j + 1,1] * 1) - abs(imagen[i, j,1] * 1)
+            nuevo_pixel2 = q + abs(imagen[i, j + 1,2] * 1) - abs(imagen[i, j,2] * 1)
+
+
+            if (nuevo_pixel0 > 255):
+                nuevo_pixel0 = 255
+            temp[i, j,0] = nuevo_pixel0
+
+            if (nuevo_pixel1 > 255):
+                nuevo_pixel1 = 255
+            temp[i, j,1] = nuevo_pixel1
+
+            if (nuevo_pixel2 > 255):
+                nuevo_pixel2 = 255
+            temp[i, j,2] = nuevo_pixel2
+
+    return temp
 
 def aclarar(imagen):
     return None
