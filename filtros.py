@@ -1,9 +1,10 @@
 import numpy as np
 import math
 from skimage import io
+import cv2
 
 def umbral(imagen):
-    valor_temporal =  np.copy(imagen)
+    valor_temporal = np.copy(imagen)
     ancho = len(valor_temporal)
     largo = len(valor_temporal[0])
     valor_temporal =  np.copy(imagen)
@@ -250,6 +251,93 @@ def relieve(imagen):
                 nuevo_pixel2 = 255
             temp[i, j,2] = nuevo_pixel2
 
+    return temp
+
+def reflejo_horizontal(imagen):
+    temp = np.copy(imagen)
+    largo = len(temp)
+    ancho = len(temp[0])
+    for i in range(0, largo):
+        for j in range(0, ancho):
+            temp[i, j, 0] = imagen[i, ancho - j - 1, 0]
+            temp[i, j, 1] = imagen[i, ancho - j - 1, 1]
+            temp[i, j, 2] = imagen[i, ancho - j - 1, 2]
+    return temp
+
+def escalado(image, escala):
+    imagen_escalada = np.copy(image)
+    altura, ancho, canales = image.shape
+    nueva_altura = int(altura * escala)
+    nuevo_ancho = int(ancho * escala)
+
+    # Crear una matriz vacía para la imagen escalada
+    imagen_escalada = np.zeros((nueva_altura, nuevo_ancho, canales), dtype=np.uint8)
+
+    # Calcular la relación de escala inversa
+    inv_escala = 1.0 / escala
+
+    # Calcular los índices de píxel de la imagen escalada
+    for i in range(nueva_altura):
+        for j in range(nuevo_ancho):
+            y = i * inv_escala
+            x = j * inv_escala
+            y1 = int(y)
+            y2 = min(y1 + 1, altura - 1)
+            x1 = int(x)
+            x2 = min(x1 + 1, ancho - 1)
+            fy = y - y1
+            fx = x - x1
+            # Calcular el valor del píxel interpolado
+            for k in range(canales):
+                p1 = image[y1, x1, k] * (1.0 - fx) + image[y1, x2, k] * fx
+                p2 = image[y2, x1, k] * (1.0 - fx) + image[y2, x2, k] * fx
+                imagen_escalada[i, j, k] = p1 * (1.0 - fy) + p2 * fy
+
+    return imagen_escalada
+
+def interrotacion(imagen, angulo):
+    # Convertir el ángulo a radianes
+    radianes = np.deg2rad(angulo)
+
+    # Obtener el tamaño de la imagen original
+    altura, ancho = imagen.shape[:2]
+
+    # Calcular la matriz de transformación de rotación
+    cos_theta = np.cos(radianes)
+    sen_theta = np.sin(radianes)
+    matriz_rot = cv2.getRotationMatrix2D((ancho / 2, altura / 2), angulo, 1)
+
+    # Calcular los límites de la imagen rotada
+    cos_theta_abs = abs(cos_theta)
+    sen_theta_abs = abs(sen_theta)
+    nuevo_ancho = int(altura * sen_theta_abs + ancho * cos_theta_abs)
+    nueva_altura = int(altura * cos_theta_abs + ancho * sen_theta_abs)
+    matriz_rot[0, 2] += (nuevo_ancho - ancho) / 2
+    matriz_rot[1, 2] += (nueva_altura - altura) / 2
+
+    # Crear la máscara con fondo transparente
+    mascara = np.zeros((nueva_altura, nuevo_ancho, 3), dtype=np.uint8)
+    mascara[0:altura, 0:ancho, :] = 255
+
+    # Aplicar la matriz de transformación a la imagenn y a la máscara
+    imagen_rotada = cv2.warpAffine(imagen, matriz_rot, (nuevo_ancho, nueva_altura), flags=cv2.INTER_LINEAR)
+    rotated_mascara = cv2.warpAffine(mascara, matriz_rot, (nuevo_ancho, nueva_altura), flags=cv2.INTER_LINEAR)
+
+    # Combinar la imagen rotada con la máscara para obtener el fondo transparente
+    imagen_rotada = cv2.bitwise_and(imagen_rotada, rotated_mascara)
+
+    return imagen_rotada
+
+
+def reflejo_vertical(imagen):
+    temp = np.copy(imagen)
+    largo = len(temp)
+    ancho = len(temp[0])
+    for i in range(0, largo):
+        for j in range(0, ancho):
+            temp[i, j, 0] = imagen[largo - i - 1, j, 0]
+            temp[i, j, 1] = imagen[largo - i - 1, j, 1]
+            temp[i, j, 2] = imagen[largo - i - 1, j, 2]
     return temp
 
 def aclarar(imagen):
