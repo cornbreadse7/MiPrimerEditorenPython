@@ -12,25 +12,18 @@ def main():
     sg.theme('DarkGray15')
 
     menu_def = [['Archivo', ['Abrir', 'Guardar', 'Salir']],
-                ['Operaciones', ['Negativo', 'Logaritmica', 'Cosenoidal','Vaciar Filtro']],
+                ['Operaciones', ['Mostrar la Imagen Original', 'Negativo', 'Logaritmica', 'Cosenoidal','Vaciar Imagen']],
                 ['Filtros', [ 'Borde Gradiente','Suavizado','Disminucion del ruido','Relieve' ]],
                 ['Operaciones Geometricas', ['Escalado', 'Rotacion', 'Reflejo Horizontal', 'Reflejo Vertical']],
                 ['Ayuda', ['Acerca de', 'Codigo Fuente']], ]
 
-    layoutCol = [
-        [sg.Image(filename='', key='-IMAGE1-')],
-        [sg.Image(filename='', key='-IMAGE2-')],
-    ]
-
     layout = [
-        [sg.Text('Editor de Imagenes con Python', size=(200, 1), justification='center')],
-        [sg.Menu(menu_def)],
-        [sg.Column([layoutCol[0]]), sg.Column([layoutCol[1]])]
+        [sg.Text('Editor de Imagenes con Python', size=(80, 1), justification='center')],
+        [sg.Menu(menu_def, )],
+        [sg.Image(filename='', key='-IMAGE-')]
     ]
 
-    imagen = np.ones((550,680))
-    imagenr = np.ones((550, 680))
-
+    imagen = np.ones((550,700))
     window = sg.Window('Mi Primer editor de imagenes en Python', layout, location=(800, 400))
 
     while True:
@@ -40,9 +33,17 @@ def main():
             sg.popup('Gracias por usar el programa')
             break
 
+        if event == 'Imagen Original':
+            try:
+                imagen = cv2.imread(filename)
+                sg.popup('Mostrando la imagen Original')
+            except Exception:
+                sg.popup('Por favor, elija una imagen')
+                pass
+
         if event == 'Negativo':
             try:
-                imagenr = filtros.negativo(imagen)
+                imagen = filtros.negativo(imagen)
                 sg.popup('Mostrando la imagen Negativa')
             except Exception:
                 sg.popup('Por favor, elija una imagen')
@@ -50,7 +51,7 @@ def main():
 
         if event == 'Logaritmica':
             try:
-                imagenr = filtros.logaritmica(imagen)
+                imagen = filtros.logaritmica(imagen)
                 sg.popup('Mostrando la imagen con filtro logaritmico')
             except Exception:
                 sg.popup('Por favor, elija una imagen')
@@ -58,7 +59,7 @@ def main():
 
         if event == 'Cosenoidal':
             try:
-                imagenr = filtros.cosenoidal(imagen)
+                imagen = filtros.cosenoidal(imagen)
                 sg.popup('Mostrando la imagen con filtro cosenoidal')
             except Exception:
                 sg.popup('Por favor, elija una imagen')
@@ -66,7 +67,7 @@ def main():
 
         if event == 'Borde Gradiente':
             try:
-                imagenr = filtros.borde_gradiente(imagen)
+                imagen = filtros.borde_gradiente(imagen)
                 sg.popup('Mostrando la imagen con borde gradiente')
             except Exception:
                 sg.popup('Por favor, elija una imagen')
@@ -74,21 +75,21 @@ def main():
 
         if event == 'Suavizado':
             try:
-                imagenr = filtros.suavizado(imagen)
+                imagen = filtros.suavizado(imagen)
                 sg.popup('Mostrando la imagen con suavizado')
             except Exception:
                 sg.popup('Por favor, elija una imagen')
 
         if event == 'Disminucion del ruido':
             try:
-                imagenr = filtros.disminucion_ruido(imagen)
+                imagen = filtros.disminucion_ruido(imagen)
                 sg.popup('Mostrando la imagen con suavizado')
             except Exception:
                 sg.popup('Por favor, elija una imagen')
 
         if event == 'Relieve':
             try:
-                imagenr = filtros.relieve(imagen)
+                imagen = filtros.relieve(imagen)
                 sg.popup('Mostrando la imagen con relieve')
             except Exception:
                 sg.popup('Por favor, elija una imagen')
@@ -117,7 +118,7 @@ def main():
                         ruta_imagen = values[0]
                         valor_slider = values["-SLIDER-"]
                         valor_slider = float(valor_slider)
-                        imagenr = filtros.escalado(imagen,valor_slider)
+                        imagen = filtros.escalado(imagen,valor_slider)
                         sg.popup('Mostrando la imagen con escalado')
                         ventana.close()
                     pass
@@ -148,7 +149,7 @@ def main():
                         ruta_imagen = values[0]
                         valor_slider = values["-SLIDER-"]
                         valor_slider = float(valor_slider)
-                        imagenr = filtros.interrotacion(imagen, valor_slider)
+                        imagen = filtros.interrotacion(imagen, valor_slider)
                         sg.popup('Mostrando la imagen con escalado')
                         ventana.close()
                     pass
@@ -157,14 +158,14 @@ def main():
 
         if event == 'Reflejo Horizontal':
             try:
-                imagenr = filtros.reflejo_horizontal(imagen)
+                imagen = filtros.reflejo_horizontal(imagen)
                 sg.popup('Mostrando la imagen con reflejo horizontal')
             except Exception:
                 sg.popup('Por favor, elija una imagen')
 
         if event == 'Reflejo Vertical':
             try:
-                imagenr = filtros.reflejo_vertical(imagen)
+                imagen = filtros.reflejo_vertical(imagen)
                 sg.popup('Mostrando la imagen con reflejo vertical')
             except Exception:
                 sg.popup('Por favor, elija una imagen')
@@ -176,8 +177,8 @@ def main():
             webbrowser.open('https://github.com/cornbreadse7/MiPrimerEditorenPython', new=1)
 
 
-        if event == 'Vaciar Filtro':
-            imagenr = np.ones((550,680))
+        if event == 'Vaciar Imagen':
+            imagen = np.ones((500, 500))
 
         if event == 'Abrir':
             filename = sys.argv[1] if len(sys.argv) > 1 else sg.popup_get_file('Abrir archivo (PNG, JPG)')
@@ -194,12 +195,10 @@ def main():
                 sg.popup("Por favor, escoja una ruta")
             else:
                 # ruta = sg.popup_get_folder(title='Guardar Fotografia', message="Carpeta destino")
-                cv2.imwrite(filename, imagenr)
+                cv2.imwrite(filename, imagen)
 
-        imgbytes1 = cv2.imencode('.png', imagen)[1].tobytes()
-        window['-IMAGE1-'].update(data=imgbytes1)
-        imgbytesr = cv2.imencode('.png', imagenr)[1].tobytes()
-        window['-IMAGE2-'].update(data=imgbytesr)
+        imgbytes = cv2.imencode('.png', imagen)[1].tobytes()
+        window['-IMAGE-'].update(data=imgbytes)
 
     window.close()
 
